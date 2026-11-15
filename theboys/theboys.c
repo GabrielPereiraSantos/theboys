@@ -144,11 +144,9 @@ static void agenda (struct mundo_t *m, int tempo, int tipo, int heroi,
   }
 }
 
-#define TODOS_EVENTOS (~0)
-
 // fprio nao remove item arbitrario: esvazia e reinsere os que ficam
-// mascara: bits (1 << tipo) dos eventos a remover
-static void remove_eventos_heroi (struct mundo_t *m, int h, int mascara)
+// tipo < 0 remove todos os eventos do heroi
+static void remove_eventos_heroi (struct mundo_t *m, int h, int tipo)
 {
   struct fprio_t *nova = fprio_cria () ;
   struct evento_t *ev ;
@@ -162,7 +160,7 @@ static void remove_eventos_heroi (struct mundo_t *m, int h, int mascara)
 
   while ((ev = fprio_retira (m->lef, &t, &p)))
   {
-    if (ev->heroi == h && (mascara & (1 << ev->tipo)))
+    if (ev->heroi == h && (tipo < 0 || ev->tipo == tipo))
       free (ev) ;
     else
       fprio_insere (nova, ev, t, p) ;
@@ -425,7 +423,7 @@ static void ev_morre (struct mundo_t *m, int h, int b, int ms)
   her->vivo = false ;
   her->ativo = false ;
 
-  remove_eventos_heroi (m, h, TODOS_EVENTOS) ;
+  remove_eventos_heroi (m, h, -1) ;
   agenda (m, m->relogio, EV_AVISA, -1, b, -1) ;
 
   printf ("%6d: MORRE    HEROI %2d MISSAO %d\n", m->relogio, h, ms) ;
@@ -551,7 +549,8 @@ static void ev_invade (struct mundo_t *m, int id, int b)
     agenda (m, m->relogio + inv->tph, EV_RECUPERA, i, b, -1) ;
 
     // ENTRA pendente tambem agendaria um SAI futuro
-    remove_eventos_heroi (m, i, (1 << EV_SAI) | (1 << EV_ENTRA)) ;
+    remove_eventos_heroi (m, i, EV_SAI) ;
+    remove_eventos_heroi (m, i, EV_ENTRA) ;
     agenda (m, m->relogio, EV_SAI, i, b, -1) ;
 
     printf (primeiro ? "%d" : ", %d", i) ;

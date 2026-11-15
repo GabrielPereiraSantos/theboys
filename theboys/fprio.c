@@ -42,19 +42,8 @@ int fprio_insere (struct fprio_t *f, void *item, int tipo, int prio)
   if (!f || !item)
     return -1 ;
 
-  // posicao: antes do primeiro de prio maior (fifo nos empates)
-  // mesma passada verifica item duplicado
-  ant = NULL ;
-  aux = f->prim ;
-  while (aux && aux->prio <= prio)
-  {
+  for (aux = f->prim; aux; aux = aux->prox)
     if (aux->item == item)
-      return -1 ;
-    ant = aux ;
-    aux = aux->prox ;
-  }
-  for (struct fpnodo_t *p = aux; p; p = p->prox)
-    if (p->item == item)
       return -1 ;
 
   novo = malloc (sizeof (struct fpnodo_t)) ;
@@ -64,6 +53,15 @@ int fprio_insere (struct fprio_t *f, void *item, int tipo, int prio)
   novo->item = item ;
   novo->tipo = tipo ;
   novo->prio = prio ;
+
+  // avanca ate o primeiro de prio maior (fifo nos empates)
+  ant = NULL ;
+  aux = f->prim ;
+  while (aux && aux->prio <= prio)
+  {
+    ant = aux ;
+    aux = aux->prox ;
+  }
 
   novo->prox = aux ;
   if (ant)

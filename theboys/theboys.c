@@ -1,4 +1,3 @@
-// programa principal do projeto "The Boys - 2024/2"
 // Autor: Gabriel Pereira dos Santos, GRR 20263239
 
 #include <stdlib.h>

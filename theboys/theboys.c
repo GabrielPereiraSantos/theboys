@@ -8,15 +8,11 @@
 #include "universo.h"
 #include "simulacao.h"
 
-int main (int argc, char *argv[])
+int main ()
 {
   struct mundo_t mundo ;
 
-  // semente no argv[1] para testar
-  if (argc > 1)
-    srand (atoi (argv[1])) ;
-  else
-    srand (time (NULL)) ;
+  srand (time (NULL)) ;
 
   cria_mundo (&mundo) ;
   eventos_iniciais (&mundo) ;

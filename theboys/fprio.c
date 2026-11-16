@@ -1,5 +1,4 @@
 // TAD fila de prioridades generica
-// Autor: Gabriel Pereira dos Santos, GRR 20263239
 
 #include <stdio.h>
 #include <stdlib.h>

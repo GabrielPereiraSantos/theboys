@@ -87,7 +87,7 @@ int fila_tamanho (struct fila_t *f)
   return f->num ;
 }
 
-// itens tratados como int*, formato "a b c"
+// itens sao int*
 void fila_imprime (struct fila_t *f)
 {
   struct fila_nodo_t *aux ;

@@ -54,7 +54,7 @@ int fprio_insere (struct fprio_t *f, void *item, int tipo, int prio)
   novo->tipo = tipo ;
   novo->prio = prio ;
 
-  // avanca ate o primeiro de prio maior (fifo nos empates)
+  // acha a posicao, prio igual fica depois
   ant = NULL ;
   aux = f->prim ;
   while (aux && aux->prio <= prio)

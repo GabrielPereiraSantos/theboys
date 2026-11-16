@@ -11,16 +11,10 @@
 #include "fila.h"
 #include "fprio.h"
 
-// #ifndef permite reduzir o mundo com -D nos testes
-#ifndef T_FIM_DO_MUNDO
-#define T_FIM_DO_MUNDO 525600
-#endif
-#ifndef N_HABILIDADES
-#define N_HABILIDADES 10
-#endif
-
 #define T_INICIO        0
+#define T_FIM_DO_MUNDO  525600
 #define N_TAMANHO_MUNDO 20000
+#define N_HABILIDADES   10
 #define N_HEROIS        (N_HABILIDADES * 5)
 #define N_BASES         (N_HEROIS / 5)
 #define N_MISSOES       (T_FIM_DO_MUNDO / 100)
